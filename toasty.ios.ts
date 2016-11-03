@@ -1,26 +1,27 @@
 import * as app from "application";
+declare var CSToastManager, CSToastPositionTop, CSToastPositionCenter, CSToastPositionBottom;
 export class Toasty {
     private _text: string;
     private _duration;
     private _toast;
-    private SHORT = 2000;
-    private 
-    constructor(text: string) {
+    private _position;
+    private SHORT = 2.0;
+    private LONG = 3.5
+    constructor(text: string, duration?: any, position?: any) {
         this._text = text;
+        this.duration = duration;
+        this.position = position;
     }
-    set duration(value: string) {
-        switch(value){
+    set duration(value: any) {
+        switch (value) {
             case "short":
-            this._duration = 2000;
-            break;
+                this._duration = this.SHORT;
+                break;
             case "long":
-            this._duration = 3500;
+                this._duration = this.LONG;
             default:
-            this.duration
+                this._duration = this.SHORT
         }
-    }
-    get duration() {
-        return this._duration;
     }
     set text(value: string) {
         this._text = value;
@@ -28,14 +29,33 @@ export class Toasty {
     get text(): string {
         return this._text;
     }
+    set position(value) {
+        switch (value) {
+            case "top":
+                this._position = CSToastPositionTop;
+                break;
+            case "center":
+                this._position = CSToastPositionCenter;
+                break;
+            case "bottom":
+                this._position = CSToastPositionBottom;
+                break;
+            default:
+                this._position = CSToastPositionBottom;
+                break;
+        }
+    }
     show() {
         if (!this._text) {
             throw new Error("Text is not set")
         }
         else {
-            if(!this.duration){
-                this.duration = "2.5"
-            }
+            CSToastManager.setDefaultDuration(this._duration);
+            CSToastManager.setDefaultPosition(this._position)
+            this._toast = app.ios.rootController.view.makeToast(this.text);
         }
+    }
+    cancel() {
+        this._toast.self.cs_hideToast(this._toast);
     }
 }

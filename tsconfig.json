@@ -15,7 +15,6 @@
       "node_modules/tns-platform-declarations/tns-core-modules/android17.d.ts",
       "node_modules/tns-platform-declarations/tns-core-modules/ios/ios.d.ts",
       "node_modules/tns-platform-declarations/tns-core-modules/org.nativescript.widgets.d.ts",
-      "toasty.common.ts",
       "toasty.android.ts", 
       "toasty.ios.ts"
     ],
