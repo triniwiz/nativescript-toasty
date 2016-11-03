@@ -1,0 +1,2 @@
+platform :ios, '8.0'
+pod 'Toast-Swift', '~> 2.0.0'
