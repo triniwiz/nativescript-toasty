@@ -5,7 +5,7 @@ export declare class Toasty {
     private _position;
     private SHORT;
     private LONG;
-    constructor(text: string, duration?: any);
+    constructor(text: string, duration?: any, position?: any);
     duration: any;
     text: string;
     position: any;

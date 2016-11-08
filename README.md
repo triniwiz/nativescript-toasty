@@ -1,7 +1,10 @@
 # NativeScript-Toasty
 
+[![npm](https://img.shields.io/npm/v/nativescript-toasty.svg)](https://www.npmjs.com/package/nativescript-toasty)
+[![npm](https://img.shields.io/npm/dt/nativescript-toasty.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-toasty)
+
 ## Install
-`tns install nativescript-toasty`
+`tns plugin add nativescript-toasty`
 
 ## Usage
 
@@ -22,4 +25,9 @@ toast.show();
 
 ##Config
 
-Toasty(message:string,duration?:string) /* short or long can be used for the duration it is set to short by default*/
+`Toasty(message:string,duration?:string,position?:string);`
+
+```
+duration = "short | long";
+position = "bottom | center | top";
+``` 
