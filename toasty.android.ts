@@ -59,6 +59,8 @@ export class Toasty {
         }
     }
     cancel() {
-        this._toast.cancel();
+        if(this._toast) {
+            this._toast.cancel();
+        }
     }
 }
