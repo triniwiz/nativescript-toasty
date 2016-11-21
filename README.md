@@ -25,9 +25,9 @@ toast.show();
 
 ##Config
 
-`Toasty(message:string,duration?:string,position?:string);`
+`Toasty(message:string, duration?:string, position?:string);`
 
 ```
 duration = "short | long";
 position = "bottom | center | top";
-``` 
+```

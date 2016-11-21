@@ -56,6 +56,8 @@ export class Toasty {
         }
     }
     cancel() {
-        this._toast.self.cs_hideToast(this._toast);
+        if(this._toast) {
+            this._toast.self.cs_hideToast(this._toast);
+        }
     }
 }
