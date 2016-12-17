@@ -56,8 +56,6 @@ export class Toasty {
         }
     }
     cancel() {
-        if(this._toast) {
-            this._toast.self.cs_hideToast(this._toast);
-        }
+            app.ios.rootController.view.hideToasts();
     }
 }
