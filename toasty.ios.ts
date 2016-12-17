@@ -56,6 +56,6 @@ export class Toasty {
         }
     }
     cancel() {
-            app.ios.rootController.view.hideToasts();
+        app.ios.rootController.view.hideToasts();
     }
 }
