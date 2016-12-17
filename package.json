@@ -1,6 +1,6 @@
 {
   "name": "nativescript-toasty",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "NativeScript toast plugin",
   "main": "toasty",
   "typings": "index.d.ts",
