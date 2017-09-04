@@ -5,12 +5,12 @@ export class Toasty {
     private _duration;
     private _toast: any;
     private _position;
-    private SHORT = 2000;
-    private LONG = 3500;
+    private SHORT = 0; // see https://developer.android.com/reference/android/widget/Toast.html#LENGTH_SHORT
+    private LONG = 1; // https://developer.android.com/reference/android/widget/Toast.html#LENGTH_LONG
     constructor(text: string, duration?: any, position?: any) {
         this._text = text;
         this.duration = duration;
-        this._toast = android.widget.Toast.makeText(app.android.context, text, 2000);
+        this._toast = android.widget.Toast.makeText(app.android.context, text, this.SHORT);
         this.position = position;
     }
     set duration(value: any) {
@@ -20,6 +20,7 @@ export class Toasty {
                 break;
             case "long":
                 this._duration = this.LONG;
+                break;
             default:
                 this._duration = this.SHORT;
         }

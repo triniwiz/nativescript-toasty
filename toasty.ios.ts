@@ -6,7 +6,7 @@ export class Toasty {
     private _toast;
     private _position;
     private SHORT = 2.0;
-    private LONG = 3.5
+    private LONG = 4.0
     constructor(text: string, duration?: any, position?: any) {
         this._text = text;
         this.duration = duration;
@@ -19,6 +19,7 @@ export class Toasty {
                 break;
             case "long":
                 this._duration = this.LONG;
+                break;
             default:
                 this._duration = this.SHORT
         }
