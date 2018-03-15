@@ -18,7 +18,7 @@ toast.show();
 
 JavaScript
 ```js
-var toasty = require('nativescript-toast').Toasty;
+var toasty = require('nativescript-toasty').Toasty;
 var toast = new toasty("Toast message");
 toast.show();
 ```
