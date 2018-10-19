@@ -27,12 +27,20 @@
     "NativeScript",
     "JavaScript",
     "Android",
-    "iOS"
+    "iOS",
+    "toast"
   ],
   "author": {
     "name": "Osei Fortune",
     "email": "fortune.osei@yahoo.com"
   },
+  "contributors": [
+    {
+      "name": "Brad Martin",
+      "email": "bradwaynemartin@gmail.com",
+      "url": "https://github.com/bradmartin"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/triniwiz/nativescript-toasty/issues"
   },
@@ -40,10 +48,11 @@
   "homepage": "https://github.com/triniwiz/nativescript-toasty",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "tns-core-modules": "^2.3.0",
-    "tns-platform-declarations": "^2.3.0",
-    "typescript": "^1.8.10",
+    "tns-core-modules": "^4.2.1",
+    "tns-platform-declarations": "^4.2.1",
+    "typescript": "^2.8.2",
     "prompt": "^1.0.0",
-    "rimraf": "^2.5.0"
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.2"
   }
 }
