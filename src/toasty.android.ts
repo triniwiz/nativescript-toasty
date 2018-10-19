@@ -23,8 +23,10 @@ export class Toasty {
     );
 
     // set the toast duration
-    this._setToastDuration(duration);
-    this._setToastPosition(position);
+    this.setToastDuration(duration);
+    this.setToastPosition(position);
+
+    return this;
   }
 
   show() {
@@ -41,7 +43,7 @@ export class Toasty {
     }
   }
 
-  private _setToastDuration(value: any) {
+  setToastDuration(value: ToastDuration) {
     switch (value) {
       case ToastDuration.SHORT:
         this._toast.setDuration(android.widget.Toast.LENGTH_SHORT);
@@ -53,9 +55,11 @@ export class Toasty {
         this._toast.setDuration(android.widget.Toast.LENGTH_SHORT);
         break;
     }
+
+    return this;
   }
 
-  private _setToastPosition(value) {
+  setToastPosition(value: ToastPosition) {
     switch (value) {
       case ToastPosition.TOP:
         this._toast.setGravity(android.view.Gravity.TOP, 0, 0);
@@ -70,5 +74,7 @@ export class Toasty {
         this._toast.setGravity(android.view.Gravity.BOTTOM, 0, 0);
         break;
     }
+
+    return this;
   }
 }

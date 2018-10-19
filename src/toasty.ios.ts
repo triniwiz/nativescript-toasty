@@ -17,8 +17,8 @@ export class Toasty {
     this._text = text;
 
     // set the position and duration of the toast
-    this._setToastPosition(position);
-    this._setToastDuration(duration);
+    this.setToastPosition(position);
+    this.setToastDuration(duration);
 
     return this;
   }
@@ -35,7 +35,7 @@ export class Toasty {
     app.ios.rootController.view.hideToasts();
   }
 
-  private _setToastPosition(value: ToastPosition) {
+  setToastPosition(value: ToastPosition) {
     switch (value) {
       case ToastPosition.TOP:
         CSToastManager.setDefaultPosition(CSToastPositionTop);
@@ -50,9 +50,11 @@ export class Toasty {
         CSToastManager.setDefaultPosition(CSToastPositionBottom);
         break;
     }
+
+    return this;
   }
 
-  private _setToastDuration(value: ToastDuration) {
+  setToastDuration(value: ToastDuration) {
     switch (value) {
       case ToastDuration.SHORT:
         CSToastManager.setDefaultDuration(2.0);
@@ -64,5 +66,7 @@ export class Toasty {
         CSToastManager.setDefaultDuration(2.0);
         break;
     }
+
+    return this;
   }
 }

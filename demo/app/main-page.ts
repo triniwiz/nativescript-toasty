@@ -5,7 +5,9 @@ export function shortToast() {
 }
 
 export function longToast() {
-  new Toasty('Long Toast', ToastDuration.LONG).show();
+  new Toasty('Long Toast', ToastDuration.LONG)
+    .setToastPosition(ToastPosition.BOTTOM)
+    .show();
 }
 
 export function positionToast() {
