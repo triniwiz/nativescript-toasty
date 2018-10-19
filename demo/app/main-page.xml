@@ -1,7 +1,7 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd">
   <StackLayout>
-    <Button text="Short Toast" tap="shortToast"/>
-    <Button text="Long Toast" tap="longToast"/>
-    <Button text="Position Toast" tap="positionToast"/>
+    <Button text="Short Toast" tap="shortToast" />
+    <Button text="Long Toast" tap="longToast" />
+    <Button text="Position Toast" tap="positionToast" />
   </StackLayout>
 </Page>

@@ -4,6 +4,7 @@
 [![npm](https://img.shields.io/npm/dt/nativescript-toasty.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-toasty)
 
 ## Install
+
 `tns plugin add nativescript-toasty`
 
 ## Usage
@@ -11,23 +12,35 @@
 TypeScript
 
 ```js
-import {Toasty} from 'nativescript-toasty'
-const toast = new Toasty("Toast message");
+import { Toasty } from 'nativescript-toasty';
+const toast = new Toasty('Toast message');
 toast.show();
+
+// you can also chain the methods together and there's no need to create a reference to the Toasty instance with this approach
+new Toasty('Some Message').show();
 ```
 
 JavaScript
+
 ```js
 var toasty = require('nativescript-toasty').Toasty;
-var toast = new toasty("Toast message");
+var toast = new toasty('Toast message');
 toast.show();
 ```
 
 ##Config
 
-`Toasty(message:string, duration?:string, position?:string);`
+`Toasty(message: string, duration?: ToastDuration, position?: ToastPosition);`
 
-```
-duration = "short | long";
-position = "bottom | center | top";
+```typescript
+export enum ToastDuration {
+  'SHORT',
+  'LONG'
+}
+
+export enum ToastPosition {
+  'BOTTOM',
+  'CENTER',
+  'TOP'
+}
 ```

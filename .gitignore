@@ -10,3 +10,5 @@ demo/node_modules
 node_modules
 .vscode
 .ideas
+
+.DS_Store
