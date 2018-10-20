@@ -17,7 +17,13 @@ const toast = new Toasty('Toast message');
 toast.show();
 
 // you can also chain the methods together and there's no need to create a reference to the Toasty instance with this approach
-new Toasty('Some Message').show();
+new Toasty('Some Message').setToastDuration(ToastDuration.LONG).show();
+
+// or you can set the properties of the Toasty instance
+const toasty = new Toasty('Somethign something...');
+toasty.position = ToastPosition.CENTER;
+toasty.duration = ToastDuration.SHORT;
+toasty.show();
 ```
 
 JavaScript
@@ -28,9 +34,36 @@ var toast = new toasty('Toast message');
 toast.show();
 ```
 
-##Config
+### API
 
-`Toasty(message: string, duration?: ToastDuration, position?: ToastPosition);`
+```typescript
+ constructor(
+    text: string,
+    duration?: ToastDuration,
+    position?: ToastPosition
+  )
+
+  /**
+   * Show the Toasty
+   */
+  show();
+
+  /**
+   * Cancels the Toasty
+   */
+  cancel();
+
+/**
+ * Sets the Toast position.
+ */
+  setToastPosition(value: ToastPosition): Toasty;
+
+
+/**
+ * Sets the Toast duration.
+ */
+  setToastDuration(value: ToastDuration: Toasty);
+```
 
 ```typescript
 export enum ToastDuration {
