@@ -1,5 +1,7 @@
 export declare class Toasty {
   constructor(text: string, duration?: ToastDuration, position?: ToastPosition);
+  position: ToastPosition;
+  duration: ToastDuration;
 
   /**
    * Shows the toast message.
