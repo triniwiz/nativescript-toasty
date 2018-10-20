@@ -5,6 +5,8 @@ import { ToastDuration, ToastPosition } from './toast.common';
 export * from './toast.common';
 
 export class Toasty {
+  private _position: ToastPosition;
+  private _duration: ToastDuration;
   private _text: string;
   private _toast: android.widget.Toast;
 
@@ -27,6 +29,28 @@ export class Toasty {
     this.setToastPosition(position);
 
     return this;
+  }
+
+  public get position() {
+    return this._position;
+  }
+
+  public set position(value: ToastPosition) {
+    if (value) {
+      this._position = value;
+      this.setToastPosition(value);
+    }
+  }
+
+  public get duration() {
+    return this._duration;
+  }
+
+  public set duration(value: ToastDuration) {
+    if (value) {
+      this._duration = value;
+      this.setToastDuration(value);
+    }
   }
 
   show() {

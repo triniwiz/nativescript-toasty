@@ -8,6 +8,8 @@ declare var CSToastManager,
   CSToastPositionBottom;
 
 export class Toasty {
+  private _duration: ToastDuration;
+  private _position: ToastPosition;
   private _text: string;
   constructor(
     text: string,
@@ -21,6 +23,28 @@ export class Toasty {
     this.setToastDuration(duration);
 
     return this;
+  }
+
+  public get position() {
+    return this._position;
+  }
+
+  public set position(value: ToastPosition) {
+    if (value) {
+      this._position = value;
+      this.setToastPosition(value);
+    }
+  }
+
+  public get duration() {
+    return this._duration;
+  }
+
+  public set duration(value: ToastDuration) {
+    if (value) {
+      this._duration = value;
+      this.setToastDuration(value);
+    }
   }
 
   show() {
