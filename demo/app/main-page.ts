@@ -10,11 +10,17 @@ export function longToast() {
     .show();
 }
 
+export function chainedToast() {
+  new Toasty('Chained Toast Methods')
+    .setToastDuration(ToastDuration.LONG)
+    .setToastPosition(ToastPosition.CENTER)
+    .show();
+}
+
 export function positionToast() {
-  const toast = new Toasty(
-    'Position Toast',
-    ToastDuration.SHORT,
-    ToastPosition.CENTER
-  );
+  const toast = new Toasty('Position Toast');
+  console.log('setting position');
+  toast.position = ToastPosition.TOP;
+  toast.duration = ToastDuration.SHORT;
   toast.show();
 }

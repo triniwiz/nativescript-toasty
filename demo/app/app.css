@@ -1,18 +1,6 @@
-﻿.title {
-    font-size: 30;
-    horizontal-align: center;
-    margin: 20;
-}
+﻿@import '~nativescript-theme-core/css/core.light.css';
 
-button {
-    font-size: 42;
-    horizontal-align: center;
-}
-
-.message {
-    font-size: 20;
-    color: #284848;
-    horizontal-align: center;
-    margin: 0 20;
-    text-align: center;
+.btn-pink {
+  background-color: #ff4081;
+  color: #fff;
 }
