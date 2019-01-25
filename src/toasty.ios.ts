@@ -1,4 +1,5 @@
 import * as app from 'tns-core-modules/application';
+import * as utils from 'tns-core-modules/utils/utils';
 import { ToastDuration, ToastPosition } from './toast.common';
 export * from './toast.common';
 
@@ -51,7 +52,12 @@ export class Toasty {
     if (!this._text) {
       throw new Error('Text is not set');
     } else {
-      app.ios.rootController.view.makeToast(this._text);
+      const app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);
+      let viewController = app.keyWindow.rootViewController;
+      while (viewController.presentedViewController) {
+        viewController = viewController.presentedViewController;
+      }
+      (<any>viewController.view).makeToast(this._text);
     }
   }
 
