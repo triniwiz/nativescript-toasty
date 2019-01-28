@@ -1,5 +1,5 @@
 import * as app from 'tns-core-modules/application';
-import * as utils from 'tns-core-modules/utils/utils';
+import * as frameModule from 'tns-core-modules/ui/frame';
 import { ToastDuration, ToastPosition } from './toast.common';
 export * from './toast.common';
 
@@ -52,12 +52,20 @@ export class Toasty {
     if (!this._text) {
       throw new Error('Text is not set');
     } else {
-      const app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);
-      let viewController = app.keyWindow.rootViewController;
-      while (viewController.presentedViewController) {
-        viewController = viewController.presentedViewController;
+      if (!frameModule.topmost()) {
+        throw new Error('There is no topmost');
       }
-      (<any>viewController.view).makeToast(this._text);
+      else{
+        let viewController = frameModule.topmost().viewController;
+        let view  = viewController.view;
+        if(viewController.presentedViewController){
+          while (viewController.presentedViewController) {
+            viewController = viewController.presentedViewController;
+          }
+          view = viewController.view;
+        }
+        view.makeToast(this._text);
+      }
     }
   }
 
