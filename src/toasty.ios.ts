@@ -1,12 +1,9 @@
+/// <reference path="./typings/objc!Toast.d.ts" />
+
 import * as app from 'tns-core-modules/application';
 import * as frameModule from 'tns-core-modules/ui/frame';
 import { ToastDuration, ToastPosition } from './toast.common';
 export * from './toast.common';
-
-declare var CSToastManager,
-  CSToastPositionTop,
-  CSToastPositionCenter,
-  CSToastPositionBottom;
 
 export class Toasty {
   private _duration: ToastDuration;
@@ -54,11 +51,10 @@ export class Toasty {
     } else {
       if (!frameModule.topmost()) {
         throw new Error('There is no topmost');
-      }
-      else{
+      } else {
         let viewController = frameModule.topmost().viewController;
-        let view  = viewController.view;
-        if(viewController.presentedViewController){
+        let view = viewController.view;
+        if (viewController.presentedViewController) {
           while (viewController.presentedViewController) {
             viewController = viewController.presentedViewController;
           }
