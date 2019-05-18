@@ -24,3 +24,11 @@ export function positionToast() {
   toast.duration = ToastDuration.SHORT;
   toast.show();
 }
+
+export function cancelToast() {
+  const toast = new Toasty('Canceling after 1 sec');
+  toast.show();
+  setTimeout(() => {
+    toast.cancel();
+  }, 1000);
+}

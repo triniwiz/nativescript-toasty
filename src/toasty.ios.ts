@@ -1,6 +1,7 @@
 /// <reference path="./typings/objc!Toast.d.ts" />
 
-import * as app from 'tns-core-modules/application';
+import { device } from 'tns-core-modules/platform';
+import { DeviceType } from 'tns-core-modules/ui/enums';
 import * as frameModule from 'tns-core-modules/ui/frame';
 import { ToastDuration, ToastPosition } from './toast.common';
 export * from './toast.common';
@@ -49,24 +50,12 @@ export class Toasty {
     if (!this._text) {
       throw new Error('Text is not set');
     } else {
-      if (!frameModule.topmost()) {
-        throw new Error('There is no topmost');
-      } else {
-        let viewController = frameModule.topmost().viewController;
-        let view = viewController.view;
-        if (viewController.presentedViewController) {
-          while (viewController.presentedViewController) {
-            viewController = viewController.presentedViewController;
-          }
-          view = viewController.view;
-        }
-        view.makeToast(this._text);
-      }
+      Toasty.getView().makeToast(this._text);
     }
   }
 
   cancel() {
-    app.ios.rootController.view.hideToasts();
+    Toasty.getView().hideToasts();
   }
 
   setToastPosition(value: ToastPosition) {
@@ -102,5 +91,22 @@ export class Toasty {
     }
 
     return this;
+  }
+
+  private static getView(): any {
+    if (!frameModule.topmost()) {
+      throw new Error('There is no topmost');
+    } else {
+      let viewController = frameModule.topmost().viewController;
+      if (viewController.presentedViewController) {
+        // on iPad, we don't want to show the toast in the modal, but on iPhone we do
+        if (device.deviceType !== DeviceType.Tablet) {
+          while (viewController.presentedViewController) {
+            viewController = viewController.presentedViewController;
+          }
+        }
+      }
+      return viewController.view;
+    }
   }
 }

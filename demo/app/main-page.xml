@@ -12,6 +12,9 @@
 
       <Label text="You can chain the toast methods for setting position and duration." class="h3 m-5" textWrap="true" />
       <Button text="Chained Toast" tap="chainedToast" class="btn btn-pink" />
+
+      <Label text="You can cancel a Toast (hide it)." class="h3 m-5" textWrap="true" />
+      <Button text="Cancel Toast" tap="cancelToast" class="btn btn-pink" />
     </StackLayout>
   </ScrollView>
 </Page>

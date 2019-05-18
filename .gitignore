@@ -9,7 +9,7 @@ demo/platforms
 demo/node_modules
 node_modules
 .vscode
-.ideas
+.idea
 
 .DS_Store
 
