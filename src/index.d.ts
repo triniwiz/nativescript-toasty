@@ -38,6 +38,7 @@ export declare class Toasty {
   /**
    * Set the background color of the toast.
    * @param value [Color |  string] - Color of the background.
+   * On Android this currently removes the default Toast rounded borders.
    */
   setBackgroundColor(value: Color | string): this;
 }
@@ -50,5 +51,6 @@ export enum ToastDuration {
 export enum ToastPosition {
   'BOTTOM' = 'bottom',
   'CENTER' = 'center',
-  'TOP' = 'top'
+  'TOP' = 'top',
+  'NO_SETTING' = 'no_setting'
 }
