@@ -26,7 +26,7 @@ new Toasty('Some Message')
 
 // or you can set the properties of the Toasty instance
 const toasty = new Toasty('Somethign something...');
-toasty.position = ToastPosition.CENTER;
+toasty.position = ToastPosition.NO_SETTING;
 toasty.duration = ToastDuration.SHORT;
 toasty.textColor = '#fff';
 toasty.backgroundColor = new Color('purple');
@@ -82,6 +82,7 @@ toast.show();
 /**
   * Set the background color of the toast.
   * @param value [Color |  string] - Color of the background.
+  * On Android this currently removes the default Toast rounded borders.
   */
   setBackgroundColor(value: Color | string): Toasty;
 ```
@@ -95,6 +96,7 @@ export enum ToastDuration {
 export enum ToastPosition {
   'BOTTOM',
   'CENTER',
-  'TOP'
+  'TOP',
+  'NO_SETTING'
 }
 ```
