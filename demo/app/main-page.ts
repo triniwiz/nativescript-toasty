@@ -7,8 +7,8 @@ export function shortToast() {
 
 export function longToast() {
   new Toasty('Long Toast with Red Text', ToastDuration.LONG)
-    .setToastPosition(ToastPosition.BOTTOM)
     .setTextColor(new Color('white'))
+    .setToastPosition(ToastPosition.NO_SETTING)
     .setBackgroundColor('#ff9999')
     .show();
 }
@@ -24,7 +24,7 @@ export function chainedToast() {
 
 export function positionToast() {
   const toast = new Toasty('Position Toast');
-  toast.position = ToastPosition.TOP;
+  toast.position = ToastPosition.BOTTOM;
   toast.duration = ToastDuration.SHORT;
   toast.textColor = 'black';
   toast.backgroundColor = new Color('#fff000');
@@ -32,7 +32,9 @@ export function positionToast() {
 }
 
 export function cancelToast() {
-  const toast = new Toasty('Canceling after 1 sec');
+  const toast = new Toasty('Canceling after 1 sec').setToastPosition(
+    ToastPosition.CENTER
+  );
   toast.show();
   setTimeout(() => {
     toast.cancel();
