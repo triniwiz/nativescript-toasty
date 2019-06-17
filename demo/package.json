@@ -4,13 +4,19 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "org.nativescript.demo"
+    "id": "org.nativescript.demo",
+    "tns-android": {
+      "version": "5.4.0"
+    },
+    "tns-ios": {
+      "version": "5.4.2"
+    }
   },
   "dependencies": {
     "nativescript-toasty": "file:../src",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-unit-test-runner": "^0.5.0",
-    "tns-core-modules": "^5.2.2"
+    "tns-core-modules": "^5.4.1"
   },
   "devDependencies": {
     "jasmine-core": "3.3.0",
@@ -18,10 +24,10 @@
     "karma-jasmine": "1.1.2",
     "karma-nativescript-launcher": "0.4.0",
     "nativescript-dev-typescript": "~0.8.0",
-    "nativescript-dev-webpack": "^0.20.2",
+    "nativescript-dev-webpack": "0.24.1",
     "tns-platform-declarations": "^5.2.2",
-    "tslint": "~5.13.1",
-    "typescript": "~3.1.6"
+    "tslint": "~5.17.0",
+    "typescript": "~3.4.5"
   },
   "scripts": {
     "build.plugin": "cd ../src && npm run build",
