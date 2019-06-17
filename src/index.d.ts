@@ -1,7 +1,15 @@
 export declare class Toasty {
-  constructor(text: string, duration?: ToastDuration, position?: ToastPosition);
+  constructor(
+    text: string,
+    duration?: ToastDuration,
+    position?: ToastPosition,
+    textColor?: Color | string,
+    backgroundColor?: Color | string
+  );
   position: ToastPosition;
   duration: ToastDuration;
+  textColor: Color | string;
+  backgroundColor: Color | string;
 
   /**
    * Shows the toast message.
@@ -20,6 +28,19 @@ export declare class Toasty {
    * @param value [ToastDuration] - Duration of toast.
    */
   setToastDuration(value: ToastDuration): this;
+
+  /**
+   * Set the text color of the toast.
+   * @param value [Color | string] - Color of the string message.
+   */
+  setTextColor(value: Color | string): this;
+
+  /**
+   * Set the background color of the toast.
+   * @param value [Color |  string] - Color of the background.
+   * On Android this currently removes the default Toast rounded borders.
+   */
+  setBackgroundColor(value: Color | string): this;
 }
 
 export enum ToastDuration {
@@ -30,5 +51,6 @@ export enum ToastDuration {
 export enum ToastPosition {
   'BOTTOM' = 'bottom',
   'CENTER' = 'center',
-  'TOP' = 'top'
+  'TOP' = 'top',
+  'NO_SETTING' = 'no_setting'
 }
