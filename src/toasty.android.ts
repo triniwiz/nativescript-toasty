@@ -1,5 +1,6 @@
 /// <reference path="./node_modules/tns-platform-declarations/android.d.ts" />
 
+import { Color } from 'tns-core-modules/color';
 import { ad as androidUtils } from 'tns-core-modules/utils/utils';
 import { ToastDuration, ToastPosition } from './toast.common';
 export * from './toast.common';
@@ -8,12 +9,16 @@ export class Toasty {
   private _position: ToastPosition;
   private _duration: ToastDuration;
   private _text: string;
+  private _backgroundColor;
+  private _textColor;
   private _toast: android.widget.Toast;
 
   constructor(
     text: string,
     duration?: ToastDuration,
-    position?: ToastPosition
+    position?: ToastPosition,
+    textColor?: Color | string,
+    backgroundColor?: Color | string
   ) {
     this._text = text;
 
@@ -27,29 +32,53 @@ export class Toasty {
     // set the toast duration
     this.setToastDuration(duration);
     this.setToastPosition(position);
+    this.setTextColor(textColor);
+    this.setBackgroundColor(backgroundColor);
 
     return this;
   }
 
-  public get position() {
+  get position() {
     return this._position;
   }
 
-  public set position(value: ToastPosition) {
+  set position(value: ToastPosition) {
     if (value) {
       this._position = value;
       this.setToastPosition(value);
     }
   }
 
-  public get duration() {
+  get duration() {
     return this._duration;
   }
 
-  public set duration(value: ToastDuration) {
+  set duration(value: ToastDuration) {
     if (value) {
       this._duration = value;
       this.setToastDuration(value);
+    }
+  }
+
+  get textColor() {
+    return this._textColor;
+  }
+
+  set textColor(value: Color | string) {
+    if (value) {
+      this._textColor = value;
+      this.setTextColor(value);
+    }
+  }
+
+  get backgroundColor() {
+    return this._backgroundColor;
+  }
+
+  set backgroundColor(value: Color | string) {
+    if (value) {
+      this._backgroundColor = value;
+      this.setBackgroundColor(value);
     }
   }
 
@@ -65,6 +94,42 @@ export class Toasty {
     if (this._toast) {
       this._toast.cancel();
     }
+  }
+
+  setTextColor(value: Color | string) {
+    if (value) {
+      this._textColor = value;
+      const view = this._toast.getView();
+      const text = view.findViewById(
+        android.R.id.message
+      ) as android.widget.TextView;
+      // set the text color
+      if (typeof value === 'string') {
+        const nativeColor = new Color(value).android;
+        text.setTextColor(nativeColor);
+      } else {
+        text.setTextColor(value.android);
+      }
+      // do we need this?
+      text.setShadowLayer(0, 0, 0, 0);
+    }
+
+    return this;
+  }
+
+  setBackgroundColor(value: Color | string) {
+    if (value) {
+      this._backgroundColor = value;
+      const view = this._toast.getView();
+      if (typeof value === 'string') {
+        const nativeColor = new Color(value).android;
+        view.setBackgroundColor(nativeColor);
+      } else {
+        view.setBackgroundColor(value.android);
+      }
+    }
+
+    return this;
   }
 
   setToastDuration(value: ToastDuration) {
