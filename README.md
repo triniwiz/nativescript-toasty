@@ -17,12 +17,19 @@ const toast = new Toasty('Toast message');
 toast.show();
 
 // you can also chain the methods together and there's no need to create a reference to the Toasty instance with this approach
-new Toasty('Some Message').setToastDuration(ToastDuration.LONG).show();
+new Toasty('Some Message')
+  .setToastDuration(ToastDuration.LONG)
+  .setToastPosition(ToastPosition.BOTTOM)
+  .setTextColor(new Color('white'))
+  .setBackgroundColor('#ff9999')
+  .show();
 
 // or you can set the properties of the Toasty instance
 const toasty = new Toasty('Somethign something...');
 toasty.position = ToastPosition.CENTER;
 toasty.duration = ToastDuration.SHORT;
+toasty.textColor = '#fff';
+toasty.backgroundColor = new Color('purple');
 toasty.show();
 ```
 
@@ -37,10 +44,13 @@ toast.show();
 ### API
 
 ```typescript
+
  constructor(
     text: string,
     duration?: ToastDuration,
-    position?: ToastPosition
+    position?: ToastPosition,
+    textColor?: Color | string,
+    backgroundColor?: Color | string
   )
 
   /**
@@ -58,11 +68,22 @@ toast.show();
  */
   setToastPosition(value: ToastPosition): Toasty;
 
-
 /**
  * Sets the Toast duration.
  */
-  setToastDuration(value: ToastDuration: Toasty);
+  setToastDuration(value: ToastDuration): Toasty;
+
+/**
+  * Set the text color of the toast.
+  * @param value [Color | string] - Color of the string message.
+  */
+  setTextColor(value: Color | string): Toasty;
+
+/**
+  * Set the background color of the toast.
+  * @param value [Color |  string] - Color of the background.
+  */
+  setBackgroundColor(value: Color | string): Toasty;
 ```
 
 ```typescript
