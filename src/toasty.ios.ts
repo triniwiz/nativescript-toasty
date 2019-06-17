@@ -137,7 +137,11 @@ export class Toasty {
       case ToastPosition.BOTTOM:
         CSToastManager.setDefaultPosition(CSToastPositionBottom);
         break;
+      // case to allow user to the let the iOS pod default set
+      case ToastPosition.NO_SETTING:
+        break;
       default:
+        // leaving this as default to avoid a breaking change for now - next major release can drop the NO_SETTING value and default for nothing in this switch
         CSToastManager.setDefaultPosition(CSToastPositionBottom);
         break;
     }

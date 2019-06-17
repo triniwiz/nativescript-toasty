@@ -6,5 +6,6 @@ export enum ToastDuration {
 export enum ToastPosition {
   'BOTTOM' = 'bottom',
   'CENTER' = 'center',
-  'TOP' = 'top'
+  'TOP' = 'top',
+  'NO_SETTING' = 'no_setting'
 }
