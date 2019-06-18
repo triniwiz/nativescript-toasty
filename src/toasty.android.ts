@@ -1,8 +1,7 @@
-/// <reference path="./node_modules/tns-platform-declarations/android.d.ts" />
-
 import { Color } from 'tns-core-modules/color';
+import { screen } from 'tns-core-modules/platform';
 import { ad as androidUtils } from 'tns-core-modules/utils/utils';
-import { ToastDuration, ToastPosition } from './toast.common';
+import { ToastDuration, ToastPosition, ToastyOptions } from './toast.common';
 export * from './toast.common';
 
 export class Toasty {
@@ -11,29 +10,32 @@ export class Toasty {
   private _text: string;
   private _backgroundColor;
   private _textColor;
+  private _androidOpts: { yAxisOffset: number };
   private _toast: android.widget.Toast;
+  private _screenHeight: number;
 
-  constructor(
-    text: string,
-    duration?: ToastDuration,
-    position?: ToastPosition,
-    textColor?: Color | string,
-    backgroundColor?: Color | string
-  ) {
-    this._text = text;
+  constructor(opts: ToastyOptions) {
+    this._screenHeight = screen.mainScreen.heightDIPs;
+
+    this._text = opts.text;
+    this._duration = opts.duration;
+    this._position = opts.position;
+    this._textColor = opts.textColor;
+    this._backgroundColor = opts.backgroundColor;
+    this._androidOpts = opts.android;
 
     // create the android Toast
     this._toast = android.widget.Toast.makeText(
       androidUtils.getApplicationContext(),
-      text,
+      this._text,
       android.widget.Toast.LENGTH_SHORT
     );
 
-    // set the toast duration
-    this.setToastDuration(duration);
-    this.setToastPosition(position);
-    this.setTextColor(textColor);
-    this.setBackgroundColor(backgroundColor);
+    // set the values
+    this.setToastDuration(this._duration)
+      .setToastPosition(this._position)
+      .setTextColor(this._textColor)
+      .setBackgroundColor(this._backgroundColor);
 
     return this;
   }
@@ -110,8 +112,6 @@ export class Toasty {
       } else {
         text.setTextColor(value.android);
       }
-      // do we need this?
-      text.setShadowLayer(0, 0, 0, 0);
     }
 
     return this;
@@ -149,22 +149,24 @@ export class Toasty {
   }
 
   setToastPosition(value: ToastPosition) {
+    let yOffset;
+    if (this._androidOpts && this._androidOpts.yAxisOffset) {
+      yOffset = this._androidOpts.yAxisOffset;
+    } else {
+      yOffset = this._screenHeight * 0.075;
+    }
+
     switch (value) {
       case ToastPosition.TOP:
-        this._toast.setGravity(android.view.Gravity.TOP, 0, 0);
+        this._toast.setGravity(android.view.Gravity.TOP, 0, yOffset);
         break;
       case ToastPosition.CENTER:
         this._toast.setGravity(android.view.Gravity.CENTER, 0, 0);
         break;
       case ToastPosition.BOTTOM:
-        this._toast.setGravity(android.view.Gravity.BOTTOM, 0, 0);
-        break;
-      // case to allow user to let the OS use default
-      case ToastPosition.NO_SETTING:
+        this._toast.setGravity(android.view.Gravity.BOTTOM, 0, yOffset);
         break;
       default:
-        // leaving this as default to avoid a breaking change for now - next major release can drop the NO_SETTING value and default for nothing in this switch
-        this._toast.setGravity(android.view.Gravity.BOTTOM, 0, 0);
         break;
     }
 
