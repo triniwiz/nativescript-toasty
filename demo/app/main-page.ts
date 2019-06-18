@@ -1,39 +1,62 @@
 import { ToastDuration, ToastPosition, Toasty } from 'nativescript-toasty';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from 'tns-core-modules/color';
+import { screen } from 'tns-core-modules/platform';
+import { topmost } from 'tns-core-modules/ui/frame';
 
 export function shortToast() {
-  new Toasty('Short Toast').show();
+  new Toasty({
+    text: 'Default Toast Settings'
+  }).show();
 }
 
 export function longToast() {
-  new Toasty('Long Toast with Red Text', ToastDuration.LONG)
-    .setTextColor(new Color('white'))
-    .setToastPosition(ToastPosition.NO_SETTING)
-    .setBackgroundColor('#ff9999')
-    .show();
+  new Toasty({
+    text:
+      'Long Toast with Red Text and BOTTOM position with Y-Axis Offset for Android.',
+    duration: ToastDuration.LONG,
+    position: ToastPosition.BOTTOM,
+    textColor: new Color('white'),
+    backgroundColor: '#ff9999',
+    android: {
+      yAxisOffset: screen.mainScreen.heightDIPs * 0.35
+    },
+    ios: {
+      anchorView: null
+    }
+  }).show();
 }
 
-export function chainedToast() {
-  const t = new Toasty('Chained Toast Methods')
-    .setToastDuration(ToastDuration.LONG)
-    .setToastPosition(ToastPosition.CENTER)
-    .setTextColor('blue');
-  t.backgroundColor = 'white';
-  t.show();
-}
-
-export function positionToast() {
-  const toast = new Toasty('Position Toast');
-  toast.position = ToastPosition.BOTTOM;
+export function positionToast(args) {
+  const toast = new Toasty({
+    text:
+      'Position TOP Toast with SHORT duration. Anchored to ActionBar for iOS.',
+    ios: {
+      // anchorView: args.object.ios
+      anchorView: topmost().currentPage.actionBar.ios,
+      displayShadow: true,
+      shadowColor: new Color('green'),
+      messageNumberOfLines: 4,
+      cornerRadius: 25
+    }
+  });
+  toast.position = ToastPosition.TOP;
   toast.duration = ToastDuration.SHORT;
   toast.textColor = 'black';
   toast.backgroundColor = new Color('#fff000');
   toast.show();
 }
 
+export function chainedToast() {
+  const t = new Toasty({ text: 'Chained Toast Methods Toast' })
+    .setToastDuration(ToastDuration.LONG)
+    .setToastPosition(ToastPosition.CENTER)
+    .setTextColor('yellow');
+  t.show();
+}
+
 export function cancelToast() {
-  const toast = new Toasty('Canceling after 1 sec').setToastPosition(
-    ToastPosition.CENTER
+  const toast = new Toasty({ text: 'Canceling after 1 sec' }).setToastPosition(
+    ToastPosition.BOTTOM
   );
   toast.show();
   setTimeout(() => {

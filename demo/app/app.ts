@@ -1,2 +1,2 @@
 ﻿import * as app from 'tns-core-modules/application';
-app.start({ moduleName: 'main-page' });
+app.run({ moduleName: 'app-root' });
