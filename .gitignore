@@ -3,6 +3,8 @@
 *.log
 !scripts/*.js
 demo/app/*.js
+!demo/webpack.config.js
+
 demo/*.d.ts
 demo/lib
 demo/platforms

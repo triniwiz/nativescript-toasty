@@ -13,11 +13,12 @@ TypeScript
 
 ```js
 import { Toasty } from 'nativescript-toasty';
-const toast = new Toasty('Toast message');
+// Toasty accepts an object for customizing its behavior/appearance. The only REQUIRED value is `text` which is the message for the toast.
+const toast = new Toasty({ text: 'Toast message' });
 toast.show();
 
 // you can also chain the methods together and there's no need to create a reference to the Toasty instance with this approach
-new Toasty('Some Message')
+new Toasty({ text: 'Some Message' })
   .setToastDuration(ToastDuration.LONG)
   .setToastPosition(ToastPosition.BOTTOM)
   .setTextColor(new Color('white'))
@@ -25,8 +26,18 @@ new Toasty('Some Message')
   .show();
 
 // or you can set the properties of the Toasty instance
-const toasty = new Toasty('Somethign something...');
-toasty.position = ToastPosition.NO_SETTING;
+const toasty = new Toasty({
+  text: 'Somethign something...',
+  position: ToastPosition.TOP,
+  android: { yAxisOffset: 100 },
+  ios: {
+    anchorView: someButton.ios, // must be the native iOS view instance (button, page, action bar, tabbar, etc.)
+    displayShadow: true,
+    shadowColor: '#fff000',
+    cornerRadius: 24
+  }
+});
+
 toasty.duration = ToastDuration.SHORT;
 toasty.textColor = '#fff';
 toasty.backgroundColor = new Color('purple');
@@ -37,7 +48,7 @@ JavaScript
 
 ```js
 var toasty = require('nativescript-toasty').Toasty;
-var toast = new toasty('Toast message');
+var toast = new toasty({ text: 'Toast message' });
 toast.show();
 ```
 
@@ -45,13 +56,15 @@ toast.show();
 
 ```typescript
 
- constructor(
-    text: string,
-    duration?: ToastDuration,
-    position?: ToastPosition,
-    textColor?: Color | string,
-    backgroundColor?: Color | string
-  )
+  constructor(opts: ToastyOptions);
+
+  position: ToastPosition;
+
+  duration: ToastDuration;
+
+  textColor: Color | string;
+
+  backgroundColor: Color | string;
 
   /**
    * Show the Toasty
@@ -94,9 +107,70 @@ export enum ToastDuration {
 }
 
 export enum ToastPosition {
-  'BOTTOM',
-  'CENTER',
-  'TOP',
-  'NO_SETTING'
+  'BOTTOM'
+  'CENTER'
+  'TOP'
+}
+
+export interface ToastyOptions {
+  /**
+   * Message text of the Toast.
+   */
+  text: string;
+
+  /**
+   * Duration to show the Toast.
+   */
+  duration?: ToastDuration;
+
+  /**
+   * Position of the Toast.
+   */
+  position?: ToastPosition;
+
+  /**
+   * Text color of the Toast message.
+   */
+  textColor?: Color | string;
+
+  /**
+   * Background Color of the Toast.
+   */
+  backgroundColor?: Color | string;
+
+  /**
+   * Android specific configuration options.
+   */
+  android?: { yAxisOffset: number };
+
+  /**
+   * iOS Specific configuration options.
+   */
+  ios?: {
+    /**
+     * The native iOS view to anchor the Toast to.
+     */
+    anchorView?: any;
+
+    /**
+     * The number of lines to allow for the toast message.
+     */
+    messageNumberOfLines?: number;
+
+    /**
+     * The corner radius of the Toast.
+     */
+    cornerRadius?: number;
+
+    /**
+     * True to display a shadow for the Toast.
+     */
+    displayShadow?: boolean;
+
+    /**
+     * The color of the shadow. Only visible if `displayShadow` is true.
+     */
+    shadowColor?: Color | string;
+  };
 }
 ```

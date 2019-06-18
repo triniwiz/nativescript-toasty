@@ -1,35 +1,57 @@
-/// <reference path="./typings/objc!Toast.d.ts" />
-
 import { Color } from 'tns-core-modules/color';
 import { device } from 'tns-core-modules/platform';
 import { DeviceType } from 'tns-core-modules/ui/enums';
 import * as frameModule from 'tns-core-modules/ui/frame';
-import { ToastDuration, ToastPosition } from './toast.common';
+import { ToastDuration, ToastPosition, ToastyOptions } from './toast.common';
 export * from './toast.common';
 
 export class Toasty {
+  private _text: string;
   private _duration: ToastDuration;
   private _position: ToastPosition;
-  private _text: string;
-  private _backgroundColor;
-  private _textColor;
+  private _textColor: Color | string;
+  private _backgroundColor: Color | string;
+  private _iOSOpts: ToastyOptions['ios'];
   private _csToaststyle: CSToastStyle;
 
-  constructor(
-    text: string,
-    duration?: ToastDuration,
-    position?: ToastPosition,
-    textColor?: Color | string,
-    backgroundColor?: Color | string
-  ) {
-    this._text = text;
+  constructor(opts?: ToastyOptions) {
     this._csToaststyle = CSToastStyle.alloc().initWithDefaultStyle();
 
-    // set the position and duration of the toast
-    this.setToastPosition(position);
-    this.setToastDuration(duration);
-    this.setTextColor(textColor);
-    this.setBackgroundColor(backgroundColor);
+    // set the default constructor args for private members
+    this._text = opts.text;
+    this._duration = opts.duration;
+    this._position = opts.position;
+    this._textColor = opts.textColor;
+    this._backgroundColor = opts.backgroundColor;
+    this._iOSOpts = opts.ios;
+
+    // set the defaults for the toasty, if passed in constructor those values are used
+    this.setToastDuration(this._duration)
+      .setToastPosition(this._position)
+      .setTextColor(this._textColor)
+      .setBackgroundColor(this._backgroundColor);
+
+    // check ios configuration
+    // if displaying shadow also check if user wants to change default shadow color
+    if (this._iOSOpts.displayShadow) {
+      this._csToaststyle.displayShadow = this._iOSOpts.displayShadow;
+      if (this._iOSOpts.shadowColor) {
+        if (typeof this._iOSOpts.shadowColor === 'string') {
+          this._csToaststyle.shadowColor = new Color(
+            this._iOSOpts.shadowColor
+          ).ios;
+        } else {
+          this._csToaststyle.shadowColor = this._iOSOpts.shadowColor.ios;
+        }
+      }
+    }
+
+    if (this._iOSOpts.cornerRadius) {
+      this._csToaststyle.cornerRadius = this._iOSOpts.cornerRadius;
+    }
+    if (this._iOSOpts.messageNumberOfLines) {
+      this._csToaststyle.messageNumberOfLines = this._iOSOpts.messageNumberOfLines;
+    }
 
     CSToastManager.setSharedStyle(this._csToaststyle);
 
@@ -84,12 +106,12 @@ export class Toasty {
     if (!this._text) {
       throw new Error('Text is not set');
     } else {
-      Toasty._getView().makeToast(this._text);
+      this._getView().makeToast(this._text);
     }
   }
 
   cancel() {
-    Toasty._getView().hideToasts();
+    this._getView().hideToasts();
   }
 
   setTextColor(value: Color | string) {
@@ -102,6 +124,7 @@ export class Toasty {
       } else {
         this._csToaststyle.messageColor = value.ios;
       }
+
       // setting the shared style so the colors apply properly
       CSToastManager.setSharedStyle(this._csToaststyle);
     }
@@ -119,6 +142,7 @@ export class Toasty {
       } else {
         this._csToaststyle.backgroundColor = value.ios;
       }
+
       // setting the shared style so the colors apply properly
       CSToastManager.setSharedStyle(this._csToaststyle);
     }
@@ -137,12 +161,7 @@ export class Toasty {
       case ToastPosition.BOTTOM:
         CSToastManager.setDefaultPosition(CSToastPositionBottom);
         break;
-      // case to allow user to the let the iOS pod default set
-      case ToastPosition.NO_SETTING:
-        break;
       default:
-        // leaving this as default to avoid a breaking change for now - next major release can drop the NO_SETTING value and default for nothing in this switch
-        CSToastManager.setDefaultPosition(CSToastPositionBottom);
         break;
     }
 
@@ -165,20 +184,27 @@ export class Toasty {
     return this;
   }
 
-  private static _getView(): any {
+  private _getView(): any {
     if (!frameModule.topmost()) {
       throw new Error('There is no topmost');
     } else {
-      let viewController = frameModule.topmost().viewController;
-      if (viewController.presentedViewController) {
-        // on iPad, we don't want to show the toast in the modal, but on iPhone we do
-        if (device.deviceType !== DeviceType.Tablet) {
-          while (viewController.presentedViewController) {
-            viewController = viewController.presentedViewController;
+      // if the user provided an iOSOpts.anchorView then we're going to use it as the anchor when making the toast
+      if (this._iOSOpts && this._iOSOpts.anchorView) {
+        return this._iOSOpts.anchorView;
+      } else {
+        // if no anchorView requested we'll use the viewController view (might look into using the .window of the main VC later)
+        let viewController = frameModule.topmost()
+          .viewController as UIViewController;
+        if (viewController.presentedViewController) {
+          // on iPad, we don't want to show the toast in the modal, but on iPhone we do
+          if (device.deviceType !== DeviceType.Tablet) {
+            while (viewController.presentedViewController) {
+              viewController = viewController.presentedViewController;
+            }
           }
         }
+        return viewController.view.window;
       }
-      return viewController.view;
     }
   }
 }
