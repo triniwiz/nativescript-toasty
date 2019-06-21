@@ -23,7 +23,7 @@ export class Toasty {
     this._position = opts.position;
     this._textColor = opts.textColor;
     this._backgroundColor = opts.backgroundColor;
-    this._iOSOpts = opts.ios;
+    this._iOSOpts = opts.ios || {};
 
     // set the defaults for the toasty, if passed in constructor those values are used
     this.setToastDuration(this._duration)
