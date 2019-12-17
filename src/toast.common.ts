@@ -45,6 +45,25 @@ export interface ToastyOptions {
   backgroundColor?: Color | string;
 
   /**
+   *  Y Position
+   */
+  yAxisOffset?: Length | number;
+  /**
+   *  X Position
+   */
+  xAxisOffset?: Length | number;
+
+  /**
+   *  Tap toast to dismiss
+   */
+  tapToDismiss?: boolean;
+
+  /**
+   * The native iOS/Android view to anchor the Toast to.
+   */
+  anchorView?: any;
+
+  /**
    * Android specific configuration options.
    */
   android?: any;
@@ -73,20 +92,4 @@ export interface ToastyOptions {
      */
     shadowColor?: Color | string;
   };
-  /**
-   *  Y Position
-   */
-  yAxisOffset?: Length | number;
-  /**
-   *  X Position
-   */
-  xAxisOffset?: Length | number;
-  /**
-   *  Tap toast to dismiss
-   */
-  tapToDismiss?: boolean;
-  /**
-   * The native iOS/Android view to anchor the Toast to.
-   */
-  anchorView?: any;
 }
