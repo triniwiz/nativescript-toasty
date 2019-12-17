@@ -13,6 +13,7 @@ TypeScript
 
 ```js
 import { Toasty } from 'nativescript-toasty';
+import { isIOS } from 'tns-core-modules/platform';
 // Toasty accepts an object for customizing its behavior/appearance. The only REQUIRED value is `text` which is the message for the toast.
 const toast = new Toasty({ text: 'Toast message' });
 toast.show();
@@ -29,13 +30,14 @@ new Toasty({ text: 'Some Message' })
 const toasty = new Toasty({
   text: 'Somethign something...',
   position: ToastPosition.TOP,
-  android: { yAxisOffset: 100 },
+  yAxisOffset: 100,
+  xAxisOffset: 10,
   ios: {
-    anchorView: someButton.ios, // must be the native iOS view instance (button, page, action bar, tabbar, etc.)
     displayShadow: true,
     shadowColor: '#fff000',
     cornerRadius: 24
-  }
+  },
+  anchorView: someButton.nativeView, // must be the native iOS/Android view instance (button, page, action bar, tabbar, etc.)
 });
 
 toasty.duration = ToastDuration.SHORT;
@@ -65,6 +67,15 @@ toast.show();
   textColor: Color | string;
 
   backgroundColor: Color | string;
+
+  yAxisOffset?: Length | number;
+
+  xAxisOffset?: Length | number;
+
+  readonly width: number;
+
+  readonly height: number;
+
 
   /**
    * Show the Toasty
@@ -107,9 +118,15 @@ export enum ToastDuration {
 }
 
 export enum ToastPosition {
-  'BOTTOM'
-  'CENTER'
-  'TOP'
+  'BOTTOM',
+  'BOTTOM_LEFT',
+  'BOTTOM_RIGHT',
+  'CENTER',
+  'CENTER_LEFT',
+  'CENTER_RIGHT',
+  'TOP',
+  'TOP_LEFT',
+  'TOP_RIGHT'
 }
 
 export interface ToastyOptions {
@@ -141,7 +158,7 @@ export interface ToastyOptions {
   /**
    * Android specific configuration options.
    */
-  android?: { yAxisOffset: number };
+  android?: any;
 
   /**
    * iOS Specific configuration options.
