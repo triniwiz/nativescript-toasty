@@ -3,6 +3,8 @@
   </ActionBar>
   <ScrollView>
     <StackLayout>
+      <Button text="Go To Modal" tap="openModal" class="btn btn-pink" />
+
       <Button text="Short Toast" tap="shortToast" class="btn btn-pink" />
 
       <Button text="Long Toast" tap="longToast" class="btn btn-pink" />
