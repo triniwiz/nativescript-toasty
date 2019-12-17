@@ -1,4 +1,5 @@
 import { Color } from 'tns-core-modules/color';
+import { Length } from 'tns-core-modules/ui/styling/style-properties';
 
 export enum ToastDuration {
   'SHORT' = 'short',
@@ -7,8 +8,14 @@ export enum ToastDuration {
 
 export enum ToastPosition {
   'BOTTOM' = 'bottom',
+  'BOTTOM_LEFT' = 'bottomLeft',
+  'BOTTOM_RIGHT' = 'bottomRight',
   'CENTER' = 'center',
-  'TOP' = 'top'
+  'CENTER_LEFT' = 'centerLeft',
+  'CENTER_RIGHT' = 'centerRight',
+  'TOP' = 'top',
+  'TOP_LEFT' = 'topLeft',
+  'TOP_RIGHT' = 'topRight'
 }
 
 export interface ToastyOptions {
@@ -40,17 +47,12 @@ export interface ToastyOptions {
   /**
    * Android specific configuration options.
    */
-  android?: { yAxisOffset: number };
+  android?: any;
 
   /**
    * iOS Specific configuration options.
    */
   ios?: {
-    /**
-     * The native iOS view to anchor the Toast to.
-     */
-    anchorView?: any;
-
     /**
      * The number of lines to allow for the toast message.
      */
@@ -71,4 +73,20 @@ export interface ToastyOptions {
      */
     shadowColor?: Color | string;
   };
+  /**
+   *  Y Position
+   */
+  yAxisOffset?: Length | number;
+  /**
+   *  X Position
+   */
+  xAxisOffset?: Length | number;
+  /**
+   *  Tap toast to dismiss
+   */
+  tapToDismiss?: boolean;
+  /**
+   * The native iOS/Android view to anchor the Toast to.
+   */
+  anchorView?: any;
 }

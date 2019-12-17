@@ -1,11 +1,17 @@
 import { Color } from 'tns-core-modules/color';
+import { Length } from 'tns-core-modules/ui/styling/style-properties';
 
 export declare class Toasty {
   constructor(opts: ToastyOptions);
+
   position: ToastPosition;
   duration: ToastDuration;
   textColor: Color | string;
   backgroundColor: Color | string;
+  yAxisOffset?: Length | number;
+  xAxisOffset?: Length | number;
+  readonly width: number;
+  readonly height: number;
 
   /**
    * Shows the toast.
@@ -81,19 +87,33 @@ export interface ToastyOptions {
   backgroundColor?: Color | string;
 
   /**
+   *  Y Position
+   */
+  yAxisOffset?: Length | number;
+  /**
+   *  X Position
+   */
+  xAxisOffset?: Length | number;
+
+  /**
+   *  Tap toast to dismiss
+   */
+  tapToDismiss?: boolean;
+
+  /**
+   * The native iOS/Android view to anchor the Toast to.
+   */
+  anchorView?: any;
+
+  /**
    * Android specific configuration options.
    */
-  android?: { yAxisOffset: number };
+  android?: any;
 
   /**
    * iOS Specific configuration options.
    */
   ios?: {
-    /**
-     * The native iOS view to anchor the Toast to.
-     */
-    anchorView?: any;
-
     /**
      * The number of lines to allow for the toast message.
      */
