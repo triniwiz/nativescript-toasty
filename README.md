@@ -1,5 +1,6 @@
 # NativeScript-Toasty
 
+![Build CI](https://github.com/triniwiz/nativescript-toasty/workflows/Build%20CI/badge.svg)
 [![npm](https://img.shields.io/npm/v/nativescript-toasty.svg)](https://www.npmjs.com/package/nativescript-toasty)
 [![npm](https://img.shields.io/npm/dt/nativescript-toasty.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-toasty)
 
