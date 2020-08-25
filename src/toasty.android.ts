@@ -1,10 +1,9 @@
-import { Color } from 'tns-core-modules/color';
-import { screen } from 'tns-core-modules/platform';
-import { ad as androidUtils } from 'tns-core-modules/utils/utils';
+import { Color, Screen } from '@nativescript/core';
+import { android as androidApp } from '@nativescript/core/application';
+import { Length } from '@nativescript/core/ui/styling/style-properties';
+import { isNullOrUndefined } from '@nativescript/core/utils/types';
+import { ad as androidUtils } from '@nativescript/core/utils/utils';
 import { ToastDuration, ToastPosition, ToastyOptions } from './toast.common';
-import { Length } from 'tns-core-modules/ui/styling/style-properties';
-import { isNullOrUndefined } from 'tns-core-modules/utils/types';
-import { android as androidApp } from 'tns-core-modules/application';
 
 export * from './toast.common';
 
@@ -24,8 +23,8 @@ export class Toasty {
   private _anchorView: any;
 
   constructor(opts?: ToastyOptions) {
-    this._screenHeight = screen.mainScreen.heightPixels;
-    this._screenWidth = screen.mainScreen.widthPixels;
+    this._screenHeight = Screen.mainScreen.heightPixels;
+    this._screenWidth = Screen.mainScreen.widthPixels;
     this._text = opts?.text;
     this._duration = opts?.duration ?? ToastDuration.SHORT;
     this._position = opts?.position ?? ToastPosition.BOTTOM;
@@ -42,6 +41,14 @@ export class Toasty {
       this._text,
       android.widget.Toast.LENGTH_SHORT
     );
+
+    // const pDrawable = new android.graphics.drawable.PaintDrawable();
+    // pDrawable.setCornerRadius(8);
+    // const v = this._toast.getView();
+    // console.dir(v.findViewById(param0));
+    // v.setBackgroundDrawable(pDrawable);
+    // console.log('set the toast background to paint drawable');
+
     const ref = new WeakRef<Toasty>(this);
     this._toast.getView().setOnTouchListener(
       new android.view.View.OnTouchListener({
@@ -137,7 +144,7 @@ export class Toasty {
   private get yPixels(): number | undefined {
     let y;
     if (typeof this._y === 'number') {
-      y = this._y * screen.mainScreen.scale;
+      y = this._y * Screen.mainScreen.scale;
     }
 
     if (Toasty.isLength(this._y)) {
@@ -145,7 +152,7 @@ export class Toasty {
         y = (this._y as any).value;
       }
       if ((this._y as any).unit === 'dip') {
-        y = (this._y as any).value * screen.mainScreen.scale;
+        y = (this._y as any).value * Screen.mainScreen.scale;
       }
     }
 
@@ -154,7 +161,7 @@ export class Toasty {
         y = parseInt(this._y.replace('px', ''), 0);
       }
       if (this._y.includes('dip')) {
-        y = parseInt(this._y.replace('dip', ''), 0) * screen.mainScreen.scale;
+        y = parseInt(this._y.replace('dip', ''), 0) * Screen.mainScreen.scale;
       }
     }
 
@@ -164,7 +171,7 @@ export class Toasty {
   private get xPixels(): number | undefined {
     let x;
     if (typeof this._x === 'number') {
-      x = this._x * screen.mainScreen.scale;
+      x = this._x * Screen.mainScreen.scale;
     }
 
     if (Toasty.isLength(this._x)) {
@@ -172,7 +179,7 @@ export class Toasty {
         x = (this._x as any).value;
       }
       if ((this._x as any).unit === 'dip') {
-        x = (this._x as any).value * screen.mainScreen.scale;
+        x = (this._x as any).value * Screen.mainScreen.scale;
       }
     }
 
@@ -181,7 +188,7 @@ export class Toasty {
         x = parseInt(this._x.replace('px', ''), 0);
       }
       if (this._x.includes('dip')) {
-        x = parseInt(this._x.replace('dip', ''), 0) * screen.mainScreen.scale;
+        x = parseInt(this._x.replace('dip', ''), 0) * Screen.mainScreen.scale;
       }
     }
 
@@ -200,7 +207,7 @@ export class Toasty {
     const window = (
       androidApp.foregroundActivity || androidApp.startActivity
     )?.getWindow();
-    let metrics = new android.util.DisplayMetrics();
+    const metrics = new android.util.DisplayMetrics();
     window
       ?.getWindowManager()
       .getDefaultDisplay()
@@ -220,14 +227,14 @@ export class Toasty {
   get width() {
     this._measureToast();
     return (
-      this._toast?.getView().getMeasuredWidth() / screen.mainScreen.scale ?? 0
+      this._toast?.getView().getMeasuredWidth() / Screen.mainScreen.scale ?? 0
     );
   }
 
   get height() {
     this._measureToast();
     return (
-      this._toast?.getView().getMeasuredHeight() / screen.mainScreen.scale ?? 0
+      this._toast?.getView().getMeasuredHeight() / Screen.mainScreen.scale ?? 0
     );
   }
 
@@ -260,9 +267,17 @@ export class Toasty {
       const view = this._toast?.getView();
       if (typeof value === 'string') {
         const nativeColor = new Color(value).android;
-        view?.setBackgroundColor(nativeColor);
+        // Gets the actual oval background of the Toast then sets the colour filter
+        view
+          ?.getBackground()
+          .setColorFilter(nativeColor, android.graphics.PorterDuff.Mode.SRC_IN);
       } else {
-        view?.setBackgroundColor(value.android);
+        view
+          ?.getBackground()
+          .setColorFilter(
+            value.android,
+            android.graphics.PorterDuff.Mode.SRC_IN
+          );
       }
     }
 
@@ -292,8 +307,8 @@ export class Toasty {
   }
 
   private _updateToastPosition() {
-    let yOffset = this.yPixels ?? 0;
-    let xOffset = this.xPixels ?? 0;
+    const yOffset = this.yPixels ?? 0;
+    const xOffset = this.xPixels ?? 0;
     switch (this._position) {
       case ToastPosition.TOP:
         this._toast?.setGravity(android.view.Gravity.TOP, xOffset, yOffset);

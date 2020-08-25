@@ -1,17 +1,15 @@
-import { Color } from 'tns-core-modules/color';
-import { device, screen } from 'tns-core-modules/platform';
-import { DeviceType } from 'tns-core-modules/ui/enums';
-import * as frameModule from 'tns-core-modules/ui/frame';
+import { Color, Device, Frame, Screen } from '@nativescript/core';
+import { DeviceType } from '@nativescript/core/ui/enums';
+import { Length } from '@nativescript/core/ui/styling/style-properties';
+import { isNullOrUndefined } from '@nativescript/core/utils/types';
 import { ToastDuration, ToastPosition, ToastyOptions } from './toast.common';
-import { Length } from 'tns-core-modules/ui/styling/style-properties';
-import { isNullOrUndefined } from 'tns-core-modules/utils/types';
 
 export * from './toast.common';
 
 export class Toasty {
   private _text: string;
-  private _duration: ToastDuration;
-  private _position: ToastPosition;
+  private _duration: ToastDuration | number;
+  private _position: ToastPosition | number;
   private _textColor: Color | string;
   private _backgroundColor: Color | string;
   private _iOSOpts: ToastyOptions['ios'];
@@ -76,7 +74,7 @@ export class Toasty {
     return this._position;
   }
 
-  set position(value: ToastPosition) {
+  set position(value: ToastPosition | number) {
     if (value) {
       this._position = value;
       this.setToastPosition(value);
@@ -87,7 +85,7 @@ export class Toasty {
     return this._duration;
   }
 
-  set duration(value: ToastDuration) {
+  set duration(value: ToastDuration | number) {
     if (value) {
       this._duration = value;
       this.setToastDuration(value);
@@ -148,7 +146,7 @@ export class Toasty {
 
     if (Toasty.isLength(this._y)) {
       if ((this._y as any).unit === 'px') {
-        y = (this._y as any).value / screen.mainScreen.scale;
+        y = (this._y as any).value / Screen.mainScreen.scale;
       }
       if ((this._y as any).unit === 'dip') {
         y = (this._y as any).value;
@@ -157,7 +155,7 @@ export class Toasty {
 
     if (typeof this._y === 'string') {
       if (this._y.includes('px')) {
-        y = parseInt(this._y.replace('px', ''), 0) / screen.mainScreen.scale;
+        y = parseInt(this._y.replace('px', ''), 0) / Screen.mainScreen.scale;
       }
       if (this._y.includes('dip')) {
         y = parseInt(this._y.replace('dip', ''), 0);
@@ -175,7 +173,7 @@ export class Toasty {
 
     if (Toasty.isLength(this._x)) {
       if ((this._x as any).unit === 'px') {
-        x = (this._x as any).value / screen.mainScreen.scale;
+        x = (this._x as any).value / Screen.mainScreen.scale;
       }
       if ((this._x as any).unit === 'dip') {
         x = (this._x as any).value;
@@ -184,7 +182,7 @@ export class Toasty {
 
     if (typeof this._x === 'string') {
       if (this._x.includes('px')) {
-        x = parseInt(this._x.replace('px', ''), 0) / screen.mainScreen.scale;
+        x = parseInt(this._x.replace('px', ''), 0) / Screen.mainScreen.scale;
       }
       if (this._x.includes('dip')) {
         x = parseInt(this._x.replace('dip', ''), 0);
@@ -209,7 +207,7 @@ export class Toasty {
         symbol = '+';
         break;
       default:
-        let value = `${offset}`;
+        const value = `${offset}`;
         if (value.includes('-')) {
           symbol = '';
         } else {
@@ -236,7 +234,7 @@ export class Toasty {
   }
 
   get width() {
-    return 0; ///this._getView()?.toastViewForMessage()
+    return 0; // this._getView()?.toastViewForMessage()
   }
 
   get height() {
@@ -315,13 +313,13 @@ export class Toasty {
     }
   }
 
-  setToastPosition(value: ToastPosition) {
+  setToastPosition(value: ToastPosition | number) {
     this._position = value;
     this._updateToastPosition();
     return this;
   }
 
-  setToastDuration(value: ToastDuration) {
+  setToastDuration(value: ToastDuration | number) {
     switch (value) {
       case ToastDuration.SHORT:
         ToastManager.shared.duration = 2.0;
@@ -337,7 +335,7 @@ export class Toasty {
   }
 
   private _getView(): any {
-    if (!frameModule.topmost()) {
+    if (!Frame.topmost()) {
       const root = this.topViewController;
       if (!root) {
         throw new Error('There is no topmost');
@@ -349,11 +347,10 @@ export class Toasty {
         return this._anchorView;
       } else {
         // if no anchorView requested we'll use the viewController view (might look into using the .window of the main VC later)
-        let viewController = frameModule.topmost()
-          .viewController as UIViewController;
+        let viewController = Frame.topmost().viewController as UIViewController;
         if (viewController.presentedViewController) {
           // on iPad, we don't want to show the toast in the modal, but on iPhone we do
-          if (device.deviceType !== DeviceType.Tablet) {
+          if (Device.deviceType !== DeviceType.Tablet) {
             while (viewController.presentedViewController) {
               viewController = viewController.presentedViewController;
             }

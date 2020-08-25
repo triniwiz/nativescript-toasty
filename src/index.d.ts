@@ -1,5 +1,4 @@
-import { Color } from 'tns-core-modules/color';
-import { Length } from 'tns-core-modules/ui/styling/style-properties';
+import { Color, Length } from '@nativescript/core';
 
 export declare class Toasty {
   constructor(opts: ToastyOptions);
