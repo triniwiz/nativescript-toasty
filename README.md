@@ -5,7 +5,13 @@
 
 ## Install
 
+### NativeScript 7.0+
+
 `tns plugin add nativescript-toasty`
+
+### NativeScript < 7.0
+
+`tns plugin add nativescript-toasty@3.0.0-alpha.2`
 
 ## Usage
 
@@ -13,7 +19,7 @@ TypeScript
 
 ```js
 import { Toasty } from 'nativescript-toasty';
-import { isIOS } from 'tns-core-modules/platform';
+import { isIOS } from '@nativescript/core/platform';
 // Toasty accepts an object for customizing its behavior/appearance. The only REQUIRED value is `text` which is the message for the toast.
 const toast = new Toasty({ text: 'Toast message' });
 toast.show();
@@ -35,7 +41,7 @@ const toasty = new Toasty({
   ios: {
     displayShadow: true,
     shadowColor: '#fff000',
-    cornerRadius: 24
+    cornerRadius: 24,
   },
   anchorView: someButton.nativeView, // must be the native iOS/Android view instance (button, page, action bar, tabbar, etc.)
 });
@@ -114,7 +120,7 @@ toast.show();
 ```typescript
 export enum ToastDuration {
   'SHORT',
-  'LONG'
+  'LONG',
 }
 
 export enum ToastPosition {
@@ -126,7 +132,7 @@ export enum ToastPosition {
   'CENTER_RIGHT',
   'TOP',
   'TOP_LEFT',
-  'TOP_RIGHT'
+  'TOP_RIGHT',
 }
 
 export interface ToastyOptions {
