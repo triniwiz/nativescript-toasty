@@ -56,9 +56,10 @@ export class Toasty {
       }
     }
 
-    if (this._iOSOpts.cornerRadius) {
+    if (this._iOSOpts.cornerRadius || this._iOSOpts.cornerRadius === 0) {
       this._toastStyle.cornerRadius = this._iOSOpts.cornerRadius;
     }
+
     if (this._iOSOpts.messageNumberOfLines) {
       this._toastStyle.messageNumberOfLines = this._iOSOpts.messageNumberOfLines;
     }
