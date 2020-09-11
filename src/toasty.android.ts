@@ -1,8 +1,4 @@
-import { Color, Screen } from '@nativescript/core';
-import { android as androidApp } from '@nativescript/core/application';
-import { Length } from '@nativescript/core/ui/styling/style-properties';
-import { isNullOrUndefined } from '@nativescript/core/utils/types';
-import { ad as androidUtils } from '@nativescript/core/utils/utils';
+import { Application, Color, Length, Screen, Utils } from '@nativescript/core';
 import { ToastDuration, ToastPosition, ToastyOptions } from './toast.common';
 
 export * from './toast.common';
@@ -37,7 +33,7 @@ export class Toasty {
     this._anchorView = opts?.anchorView;
     // create the android Toast
     this._toast = android.widget.Toast.makeText(
-      androidUtils.getApplicationContext(),
+      Utils.android.getApplicationContext(),
       this._text,
       android.widget.Toast.LENGTH_SHORT
     );
@@ -137,7 +133,9 @@ export class Toasty {
 
   private static isLength(value) {
     return (
-      value && !isNullOrUndefined(value.unit) && !isNullOrUndefined(value.value)
+      value &&
+      !Utils.isNullOrUndefined(value.unit) &&
+      !Utils.isNullOrUndefined(value.value)
     );
   }
 
@@ -205,13 +203,11 @@ export class Toasty {
 
   private _measureToast() {
     const window = (
-      androidApp.foregroundActivity || androidApp.startActivity
+      Application.android.foregroundActivity ||
+      Application.android.startActivity
     )?.getWindow();
     const metrics = new android.util.DisplayMetrics();
-    window
-      ?.getWindowManager()
-      .getDefaultDisplay()
-      .getMetrics(metrics);
+    window?.getWindowManager().getDefaultDisplay().getMetrics(metrics);
     const MeasureSpec = android.view.View.MeasureSpec;
     const widthMeasureSpec = MeasureSpec.makeMeasureSpec(
       metrics.widthPixels,

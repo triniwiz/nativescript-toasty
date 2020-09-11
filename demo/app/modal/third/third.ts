@@ -3,7 +3,7 @@ import { Toasty } from 'nativescript-toasty';
 
 export function modalToast() {
   new Toasty({
-    text: 'Third Toast',
+    text: 'Third Toast'
   }).show();
 }
 
