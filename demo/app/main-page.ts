@@ -3,15 +3,15 @@ import { ToastDuration, ToastPosition, Toasty } from 'nativescript-toasty';
 
 export function openModal(args) {
   args.object.showModal('~/modal/modal-root', {
-    closeCallback: (args) => {},
+    closeCallback: args => {},
     context: {},
-    fullscreen: true,
+    fullscreen: true
   });
 }
 
 export function shortToast() {
   new Toasty({
-    text: 'Default Toast Settings',
+    text: 'Default Toast Settings'
   }).show();
 }
 
@@ -26,7 +26,7 @@ export function longToast() {
     anchorView: null,
     yAxisOffset: 10,
     tapToDismiss: true,
-    android: {},
+    android: {}
   }).show();
 }
 
@@ -38,13 +38,13 @@ export function positionToast(args) {
       displayShadow: true,
       shadowColor: new Color('green'),
       messageNumberOfLines: 4,
-      cornerRadius: 25,
+      cornerRadius: 25
     },
     yAxisOffset: 10,
     xAxisOffset: 10,
     anchorView: isIOS
       ? Frame.topmost().currentPage.actionBar.ios
-      : Frame.topmost().currentPage.actionBar.nativeView,
+      : Frame.topmost().currentPage.actionBar.nativeView
   });
   toast.position = ToastPosition.CENTER;
   toast.duration = ToastDuration.SHORT;

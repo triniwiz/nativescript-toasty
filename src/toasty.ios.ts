@@ -1,7 +1,12 @@
-import { Color, Device, Frame, Screen } from '@nativescript/core';
-import { DeviceType } from '@nativescript/core/ui/enums';
-import { Length } from '@nativescript/core/ui/styling/style-properties';
-import { isNullOrUndefined } from '@nativescript/core/utils/types';
+import {
+  Color,
+  Device,
+  Enums,
+  Frame,
+  Length,
+  Screen,
+  Utils
+} from '@nativescript/core';
 import { ToastDuration, ToastPosition, ToastyOptions } from './toast.common';
 
 export * from './toast.common';
@@ -135,7 +140,9 @@ export class Toasty {
 
   private static isLength(value) {
     return (
-      value && !isNullOrUndefined(value.unit) && !isNullOrUndefined(value.value)
+      value &&
+      !Utils.isNullOrUndefined(value.unit) &&
+      !Utils.isNullOrUndefined(value.value)
     );
   }
 
@@ -351,7 +358,7 @@ export class Toasty {
         let viewController = Frame.topmost().viewController as UIViewController;
         if (viewController.presentedViewController) {
           // on iPad, we don't want to show the toast in the modal, but on iPhone we do
-          if (Device.deviceType !== DeviceType.Tablet) {
+          if (Device.deviceType !== Enums.DeviceType.Tablet) {
             while (viewController.presentedViewController) {
               viewController = viewController.presentedViewController;
             }
