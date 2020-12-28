@@ -8,7 +8,7 @@
 
 ### NativeScript 7.0+
 
-`tns plugin add nativescript-toasty`
+`tns plugin add @triniwiz/nativescript-toasty`
 
 ### NativeScript < 7.0
 
