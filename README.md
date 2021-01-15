@@ -19,7 +19,9 @@
 TypeScript
 
 ```js
-import { Toasty } from 'nativescript-toasty';
+/* use package name "nativescript-toasty" for NS < 7.0 */
+import { Toasty } from "@triniwiz/nativescript-toasty" 
+
 import { isIOS } from '@nativescript/core/platform';
 // Toasty accepts an object for customizing its behavior/appearance. The only REQUIRED value is `text` which is the message for the toast.
 const toast = new Toasty({ text: 'Toast message' });
@@ -56,7 +58,8 @@ toasty.show();
 JavaScript
 
 ```js
-var toasty = require('nativescript-toasty').Toasty;
+/* use package name "nativescript-toasty" for NS < 7.0 */
+var toasty = require('@triniwiz/nativescript-toasty').Toasty;
 var toast = new toasty({ text: 'Toast message' });
 toast.show();
 ```
