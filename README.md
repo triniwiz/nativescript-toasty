@@ -6,7 +6,7 @@
 
 ## Install
 
-### NativeScript 7.0+
+### [NativeScript 7.0+](https://github.com/triniwiz/nativescript-plugins)
 
 `tns plugin add @triniwiz/nativescript-toasty`
 
